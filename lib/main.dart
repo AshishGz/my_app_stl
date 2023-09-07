@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app_stl/providers/RootProvider.dart';
+import 'package:my_app_stl/screens/DataHandaling.dart';
 import 'package:my_app_stl/screens/HomePage.dart';
 import 'package:my_app_stl/screens/NewHomePage.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: main.appData.color,
       ),
-      home: const NewHomePage(),
+      home: const DataHandaling(),
     );
   }
 }

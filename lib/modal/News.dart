@@ -20,11 +20,11 @@ class News {
 
   News.fromJson(Map<String, dynamic> json){
     source = Source.fromJson(json['source']);
-    author = json['author'];
+    author = json['author']==null?'':json['author'];
     title = json['title'];
-    description = json['description'];
+    description = json['description']==null?'':json['description'];
     url = json['url'];
-    urlToImage = json['urlToImage'];
+    urlToImage = json['urlToImage']==null?'':json['urlToImage'];
     publishedAt = json['publishedAt'];
     content = json['content'];
   }
@@ -52,7 +52,7 @@ class Source {
   late final String name;
 
   Source.fromJson(Map<String, dynamic> json){
-    id = json['id'];
+    id = json['id']==null?'':json['id'];
     name = json['name'];
   }
 

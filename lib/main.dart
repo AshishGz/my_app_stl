@@ -5,6 +5,8 @@ import 'package:my_app_stl/screens/HomePage.dart';
 import 'package:my_app_stl/screens/NewHomePage.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/APICallExample.dart';
+
 void main() {
   runApp(
     /// Providers are above [MyApp] instead of inside it, so that tests
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: main.appData.color,
       ),
-      home: const DataHandaling(),
+      home: const APICallExample(),
     );
   }
 }

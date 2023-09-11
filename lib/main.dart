@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:my_app_stl/providers/RootProvider.dart';
 import 'package:my_app_stl/screens/DataHandaling.dart';
 import 'package:my_app_stl/screens/HomePage.dart';
 import 'package:my_app_stl/screens/NewHomePage.dart';
+import 'package:my_app_stl/screens/ToDoAppHome.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/APICallExample.dart';
@@ -20,10 +22,28 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+ void initState()  {
+    // TODO: implement initState
+    super.initState();
+    onInitApp();
+  }
+
+  onInitApp() async {
+    await Hive.initFlutter();
+    await Hive.openBox('todo');
+
+
+  }
   @override
   Widget build(BuildContext context) {
     final main=Provider.of<RootProvider>(context);
@@ -32,7 +52,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: main.appData.color,
       ),
-      home: const APICallExample(),
+      home: const ToDoAppHome(),
     );
   }
 }

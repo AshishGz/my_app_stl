@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app_stl/data.dart';
 import 'package:my_app_stl/modal/News.dart';
 import 'package:my_app_stl/screens/DataHandalingDetail.dart';
-
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 class DataHandaling extends StatefulWidget {
   const DataHandaling({Key? key}) : super(key: key);
 
@@ -12,16 +13,29 @@ class DataHandaling extends StatefulWidget {
 
 class _DataHandalingState extends State<DataHandaling> {
   List<News> news=[];
-  onGetNewsData(){
-    NewsData.forEach((e) =>
-    news.add(News.fromJson(e))
-    );
-    setState(() {});
+  onGetData() async {
+    var url =
+    Uri.https('www.jsonkeeper.com', '/b/KSFZ', {'q': '{http}'});
+
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      var jsonResponse=convert.jsonDecode(response.body);
+      jsonResponse['articles'].forEach((e) =>
+          news.add(News.fromJson(e))
+      );
+      print('Number of books about http:');
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+    setState(() {
+
+    });
   }
   @override
   void initState() {
     super.initState();
-    onGetNewsData();
+    onGetData();
   }
 
   @override

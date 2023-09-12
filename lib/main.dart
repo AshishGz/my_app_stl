@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_app_stl/modal/ToDo.dart';
 import 'package:my_app_stl/providers/RootProvider.dart';
 import 'package:my_app_stl/screens/DataHandaling.dart';
 import 'package:my_app_stl/screens/HomePage.dart';
@@ -9,10 +10,11 @@ import 'package:provider/provider.dart';
 
 import 'screens/APICallExample.dart';
 
-void main() {
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(ToDoAdapter());
   runApp(
-    /// Providers are above [MyApp] instead of inside it, so that tests
-    /// can use [MyApp] while mocking the providers
+
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RootProvider()),
@@ -31,19 +33,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  @override
- void initState()  {
-    // TODO: implement initState
-    super.initState();
-    onInitApp();
-  }
-
-  onInitApp() async {
-    await Hive.initFlutter();
-    await Hive.openBox('todo');
 
 
-  }
   @override
   Widget build(BuildContext context) {
     final main=Provider.of<RootProvider>(context);

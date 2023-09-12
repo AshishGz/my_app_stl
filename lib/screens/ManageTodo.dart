@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:my_app_stl/modal/ToDo.dart';
 
 class ManageTodo extends StatefulWidget {
   const ManageTodo({Key? key}) : super(key: key);
@@ -9,6 +11,18 @@ class ManageTodo extends StatefulWidget {
 
 class _ManageTodoState extends State<ManageTodo> {
   int selectedColor=0xffffffff;
+  TextEditingController textEditingController=new TextEditingController();
+   addTodo() async {
+
+     ToDo toDo=new ToDo(new DateTime.now().
+     millisecondsSinceEpoch, selectedColor,
+         textEditingController.text);
+     await Hive.openBox<ToDo>('todo');
+     Box<ToDo> addTodo = Hive.box<ToDo>('todo');
+     await addTodo.add(toDo);
+     Navigator.pop(context);
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,6 +64,7 @@ class _ManageTodoState extends State<ManageTodo> {
 
           TextField(
             maxLines: 10,
+        controller: textEditingController,
         decoration: new InputDecoration(
           fillColor: Colors.grey,
           border: new OutlineInputBorder(
@@ -58,7 +73,7 @@ class _ManageTodoState extends State<ManageTodo> {
 
           ),),
           SizedBox(height: 20,),
-          ElevatedButton(onPressed: (){}, child: Text('Save'))
+          ElevatedButton(onPressed: (){addTodo();}, child: Text('Save'))
         ],
       ),
     )));
